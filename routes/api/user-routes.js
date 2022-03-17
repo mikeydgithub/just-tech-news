@@ -1,12 +1,13 @@
 const router = require('express').Router();
-const req = require('express/lib/request');
-const { USER, User } = require('../../models');
+const { User } = require('../../models');
 
 // GET /api/users
 router.get('/', (req, res) => {
     // Access our User model and run .findAll() method
     // .findAll method is the JS equivalent of the following SQL query: SELECT * FROM users; 
-    User.findAll()
+    User.findAll({
+        attributes: { exclude: ['password'] }
+    })
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
         console.log(err);
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     // Much like SELECT * FROM users WHERE id = 1
     User.findOne({
+        attributes: { exlude: ['password'] },
         where: {
             id: req.params.id
         }

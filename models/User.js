@@ -1,6 +1,6 @@
 // Imported Model class and DataTypes object from Sqeulize.
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../config/connections');
 
 // create our User model
 // This Model class is what we create our own models from using the extends keyword so User inherits all the functionality the model class has.
