@@ -1,6 +1,7 @@
 // Imported Model class and DataTypes object from Sqeulize.
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connections');
+const bcrypt = require('bcrypt');
 
 // create our User model
 // This Model class is what we create our own models from using the extends keyword so User inherits all the functionality the model class has.
@@ -49,6 +50,16 @@ User.init(
       }
     }
     // TABLE COLUMN DEFINITIONS GO HERE
+  },
+  {
+    hooks: {
+      // set up beforeCreate lifecycle "hook" functionalitys
+      // saltround value of 10 - how much time is needed to calculate a single BCrypt has.
+      async beforeCreate(newUserData){
+        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        return newUserData;
+      },
+    }
   },
   {
     // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
