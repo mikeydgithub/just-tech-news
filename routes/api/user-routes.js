@@ -1,8 +1,17 @@
 const router = require('express').Router();
-const { USER } = require('../../models');
+const { USER, User } = require('../../models');
 
 // GET /api/users
-router.get('/', (req, res) => {});
+router.get('/', (req, res) => {
+    // Access our User model and run .findAll() method
+    // .findAll method is the JS equivalent of the following SQL query: SELECT * FROM users; 
+    User.findAll()
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
 
 // GET /api/users/1
 router.get('/:id', (req, res) => {});
