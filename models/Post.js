@@ -25,6 +25,7 @@ Post.init(
           isURL: true
         }
       },
+      // Include referneces to the primary key and then defined the foreign key relationship with the model associations.
       user_id: {
         type: DataTypes.INTEGER,
         references: {

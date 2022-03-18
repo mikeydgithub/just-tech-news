@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
         // Query configuration
         attributes: ['id', 'post_url', 'title', 'created_at'],
         order: [['created at', 'DESC']],
+        // add fields from associated tables like post's username
         include: [
             {
                 model: User,
