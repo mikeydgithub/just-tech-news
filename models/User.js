@@ -58,7 +58,7 @@ User.init(
   },
   {
     hooks: {
-      // set up beforeCreate lifecycle "hook" functionalitys
+      // set up beforeCreate lifecycle "hook" functionalities
       // saltround value of 10 - how much time is needed to calculate a single BCrypt has.
       async beforeCreate(newUserData) {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
