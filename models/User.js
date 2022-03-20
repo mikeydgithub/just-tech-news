@@ -22,7 +22,7 @@ User.init(
     id: {
       // use the special Sequelize DataTypes Object provide what type of data it is.
       type: DataTypes.INTEGER,
-      // this is the equivalent of SQL's `NOT NULL` option
+      // this is the equivalent of SQL's `NOT NULL` option. a vlue is required.
       allowNull: false,
       // instruct that this is the Primary Key
       primaryKey: true,
@@ -71,8 +71,8 @@ User.init(
       }
     // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
-    // pass in our imported sequelize connection (the direct connection to our database)
     },
+    // pass in our imported sequelize connection (the direct connection to our database)
     sequelize,
     // don't automatically create createdAt/updatedAt timestamp fields
     timestamps: false,
