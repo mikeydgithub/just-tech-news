@@ -1,7 +1,7 @@
 // Imported Model class and DataTypes object from Sqeulize.
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connections');
-const bcrypt = require('bcrypt');
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/connections");
+const bcrypt = require("bcrypt");
 
 // create our User model
 // This Model class is what we create our own models from using the extends keyword so User inherits all the functionality the model class has.
@@ -27,12 +27,12 @@ User.init(
       // instruct that this is the Primary Key
       primaryKey: true,
       // turn on auto increment
-      autoIncrement: true
+      autoIncrement: true,
     },
     // define a username column
     username: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     // define an email column
     email: {
@@ -42,8 +42,8 @@ User.init(
       unique: true,
       // if allowNull is set to false, we can run our data through validator before creating the table data
       validate: {
-        isEmail: true
-      }
+        isEmail: true,
+      },
     },
     // define a password column
     password: {
@@ -51,9 +51,9 @@ User.init(
       allowNull: false,
       validate: {
         // this means the password must be at least four characters long
-        len: [4]
-      }
-    }
+        len: [4],
+      },
+    },
     // TABLE COLUMN DEFINITIONS GO HERE
   },
   {
@@ -66,11 +66,13 @@ User.init(
       },
       // set up beforeUpdate lifecycle "hook" functionality
       async beforeUpdate(updatedUserData) {
-        updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        );
         return updatedUserData;
-      }
-    // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
-
+      },
+      // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
     },
     // pass in our imported sequelize connection (the direct connection to our database)
     sequelize,
@@ -81,7 +83,7 @@ User.init(
     // use underscores instead of camel-casing (i.e. `comment_text` and not `commentText`)
     underscored: true,
     // make it so our model name stays lowercase in the database
-    modelName: 'user'
+    modelName: "user",
   }
 );
 
