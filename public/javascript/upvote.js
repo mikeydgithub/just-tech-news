@@ -5,7 +5,7 @@ async function upvoteClickHandler(event) {
     event.preventDefault();
 
     const id = window.location.toString().split('/')[
-        window.location.toString().split('/').length -1
+        window.location.toString().split('/').length - 1
     ];
     const response = await fetch('/api/posts/upvote', {
         method: 'PUT',
@@ -16,6 +16,7 @@ async function upvoteClickHandler(event) {
             'Content-Type': 'application/json'
         }
     });
+
     if (response.ok) {
         // reload() method reloads the current URL, like the refresh button.
         document.location.reload();
