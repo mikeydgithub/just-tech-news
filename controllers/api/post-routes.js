@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
       'post_url',
       'title',
       'created_at',
+      // sequelize.literal utility function, that allows you to directly insert arbitrary content into the query without any automatic escaping.
       [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
@@ -45,6 +46,7 @@ router.get('/:id', (req, res) => {
       'post_url',
       'title',
       'created_at',
+      // sequelize.literal utility function, that allows you to directly insert arbitrary content into the query without any automatic escaping.
       [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
