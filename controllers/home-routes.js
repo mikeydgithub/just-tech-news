@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   Post.findAll({
     attributes: ['id','post_url','title','created_at',
     // sequalize.literal utility function, that allows you to directly insert arbitrary content into the query without any automic escaping
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+    [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -32,28 +32,16 @@ router.get('/', (req, res) => {
       // the res.render() function is used to render a view and sends the rendered HTML string to the client
       console.log(dbPostData[0])
       // normal properities of render() include an id property and a title. now the only property it has access to is the posts array. handlebars.js has built in helpers that will allow for minimal logic and looping over an array.
-      res.render('homepage', { posts });
+      res.render('homepage', { 
+        posts,
+        loggedIn: req.session.loggedIn 
+      });
     })
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });
 });
-
-// render login handlebars
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.render('login');
-});
-
-// console log session vairables
-router.get('/', (req, res) => {
-  console.log(req.session);
-  //other logic
-})
 
 // single-post template
 router.get('/post/:id', (req, res) => {
@@ -67,7 +55,7 @@ router.get('/post/:id', (req, res) => {
       'title',
       'created_at',
       // sequelize.literal utility function, that allows you to directly insert arbitrary content into the query without any automatic escaping.
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post.id)'), 'vote_count']
+      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -94,12 +82,31 @@ router.get('/post/:id', (req, res) => {
 
     //pass data to the template
     // The res.render() function is used to render a view and sends the rendered HTML string to the client.
-    res.render('single-post', { post });
+    res.render('single-post', { 
+      post,
+      loggedIn: req.session.loggedIn 
+    });
   })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
   });
 });
+
+// render login handlebars
+router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
+});
+
+// console log session vairables
+router.get('/', (req, res) => {
+  console.log(req.session);
+  //other logic
+})
+
 
 module.exports = router;
