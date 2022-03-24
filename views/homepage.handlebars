@@ -1,5 +1,6 @@
 <ol class="post-list">
-  {{#each posts as |post|}}
+  <!--#each is used to being the loop and /each to end the loop*/ -->
+  {{#each posts as |post| }}
   <li>
     <article class="post">
       <div class="title">
@@ -10,7 +11,7 @@
         {{post.vote_count}} point(s) by {{post.user.username}} on
         {{post.created_at}}
         |
-        <a href="/post/{{post.id}}">{{post.comments.length}} comment(s)</a>
+        <a href="/post/{{id}}">{{post.comments.length}} comment(s)</a>
       </div>
     </article>
   </li>
