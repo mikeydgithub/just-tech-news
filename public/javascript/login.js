@@ -1,15 +1,14 @@
-async function signupFormHandler(event) {
+async function loginFormHandler(event) {
     event.preventDefault();
 
-    const username = document.querySelector('#username-signup').value.trim();
+    // trim removes the whitespace from both ends of a string. (' hello world ') before trim and ('hello world') after trim.
     const email = document.querySelector('#email-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
 
-    if (username && email && password) {
-        const response = await fetch ('/api/users', {
+    if (email && password) {
+        const response = await fetch ('/api/users/login', {
             method: 'post',
-            body: JSON.stringify({
-                username,
+            body: JSON.stringify({ 
                 email,
                 password
             }),
@@ -18,22 +17,25 @@ async function signupFormHandler(event) {
         // check the response status
         if (response.ok) {
             console.log('sucess')
+            document.location.replace('/')
         } else {
             alert(response.statusText);
         }
     }
 };
 
-async function loginFormHandler(event) {
-event.preventDefault();
+async function signupFormHandler(event) {
+    event.preventDefault();
 
+    const username = document.querySelector('#username-signup').value.trim();
     const email = document.querySelector('#email-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
 
-    if (email && password) {
-        const response = await fetch('/api/users/login', {
+    if (username && email && password) {
+        const response = await fetch('/api/users', {
         method: 'post',
         body: JSON.stringify({
+            username,
             email,
             password
         }),
@@ -50,4 +52,5 @@ event.preventDefault();
 
 
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);

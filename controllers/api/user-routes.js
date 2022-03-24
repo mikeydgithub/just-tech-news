@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// get one user
 router.get('/:id', (req, res) => {
   User.findOne({
     attributes: { exclude: ['password'] },
@@ -53,6 +54,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// create a user
 router.post('/', (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
   User.create({
@@ -61,9 +63,11 @@ router.post('/', (req, res) => {
     password: req.body.password
   })
     .then(dbUserData => {
+      // make sure the session is created before we send the response back. wrap in a callback vriable called req.session.save. this method will initiate the creation and run the callback.
       req.session.save(() => {
         req.session.user_id = dbUserData.id;
         req.session.username = dbUserData.username;
+        // boolean for describing whether or not the user is logged in
         req.session.loggedIn = true;
     
         res.json(dbUserData);
@@ -75,6 +79,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// create login
 router.post('/login', (req, res) => {
   // expects {email: 'lernantino@gmail.com', password: 'password1234'}
   User.findOne({
@@ -98,14 +103,17 @@ router.post('/login', (req, res) => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
+
       res.json({ user: dbUserData, message: 'You are now logged in!' });
     });
   });
 });
 
+// create logout
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
+      // 204 response code indicates that a request has succeeded, but the client doesn't need to navigate away from its current page.
       res.status(204).destroy();
     });
   } else {
@@ -113,6 +121,7 @@ router.post('/logout', (req, res) => {
   }
 });
 
+// update a single user by id
 router.put('/:id', (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
 
@@ -136,6 +145,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// delete a user by id
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
