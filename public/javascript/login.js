@@ -43,7 +43,8 @@ async function loginFormHandler(event) {
   
       if (response.ok) {
         // replace() method removes the page from the session history and navigates to the given URL
-        document.location.replace('/');
+        // redirect users to the dashboard after successful login
+        document.location.replace('/dashboard');
       } else {
         alert(response.statusText);
       }

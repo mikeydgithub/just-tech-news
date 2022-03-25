@@ -1,6 +1,5 @@
 // get the upvote button to work. add event listener to the button and then make a fetch() request to the api/posts/upvote endpoint
 
-
 async function upvoteClickHandler(event) {
     event.preventDefault();
 
