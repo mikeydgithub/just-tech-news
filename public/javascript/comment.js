@@ -3,6 +3,8 @@ async function commentFormHandler(event) {
   
     const comment_text = document.querySelector('textarea[name="comment-body"]').value.trim();
   
+    // toString() method returns a string reprensting the object
+    // split() method divides a string into an ordered list of substrings, then goes into an array, and returns the array.
     const post_id = window.location.toString().split('/')[
       window.location.toString().split('/').length - 1
     ];

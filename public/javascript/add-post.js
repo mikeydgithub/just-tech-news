@@ -2,8 +2,6 @@
 // and post-url values from the form and send them with 
 // a POST request to /api/posts.
 
-
-
 async function newFormHandler(event) {
     event.preventDefault();
   
@@ -20,7 +18,9 @@ async function newFormHandler(event) {
         'Content-Type': 'application/json'
       }
     });
-  
+
+    // replace() method removes the page from the session history and navigates to the given URL
+    // redirect users to the dashboard after successful login
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
